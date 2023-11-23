@@ -8,15 +8,14 @@ document.addEventListener('DOMContentLoaded', function () {
     window.sendMessage = function () {
         var messageInput = document.getElementById('messageInput');
         var message = messageInput.value;
-        displayMessage(message);  // Display the sent message on the sender's side
         socket.emit('chat message', message);
         messageInput.value = '';
     };
 
     function displayMessage(msg) {
         var messages = document.getElementById('messages');
-        var li = document.createElement('li');
-        li.textContent = msg;
-        messages.appendChild(li);
+        var p = document.createElement('p');
+        p.innerHTML = `<a href="#">${msg}</a>`;
+        messages.appendChild(p);
     }
 });
