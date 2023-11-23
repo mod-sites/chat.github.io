@@ -1,8 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
     var socket = io();
+    var broadcastChannel = new BroadcastChannel('chat');
 
     socket.on('chat message', function (msg) {
         displayMessage(msg);
+        broadcastChannel.postMessage({ type: 'message', data: msg });
     });
 
     window.sendMessage = function () {
@@ -18,4 +20,11 @@ document.addEventListener('DOMContentLoaded', function () {
         p.innerHTML = `<a href="#">${msg}</a>`;
         messages.appendChild(p);
     }
+
+    // Listen for messages from other tabs
+    broadcastChannel.onmessage = function (event) {
+        if (event.data.type === 'message') {
+            displayMessage(event.data.data);
+        }
+    };
 });
