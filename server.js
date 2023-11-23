@@ -6,7 +6,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
 
-app.use(express.static('public'));
+app.use(express.static('docs'));
 
 io.on('connection', function (socket) {
     console.log('a user connected');
